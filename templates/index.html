@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PDF to Podcast</title>
+    <style>
+      :root {
+        --bg: #f6f1e8;
+        --ink: #1b1a17;
+        --accent: #1f7a6f;
+        --accent-strong: #14564f;
+        --panel: rgba(255, 255, 255, 0.78);
+        --muted: #5f5a52;
+        --ring: rgba(31, 122, 111, 0.35);
+        --glow: rgba(31, 122, 111, 0.25);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(1000px 500px at 10% 5%, #e6f3ef 0%, transparent 60%),
+          radial-gradient(900px 420px at 90% 10%, #f7d9c7 0%, transparent 55%),
+          radial-gradient(700px 300px at 20% 85%, #f2e4ff 0%, transparent 60%),
+          linear-gradient(180deg, #f8f4ec 0%, #efe6d8 100%);
+        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+        min-height: 100vh;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(120deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0)),
+          radial-gradient(circle at 25% 25%, rgba(31, 122, 111, 0.08), transparent 40%);
+        pointer-events: none;
+      }
+      .page {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 48px 24px 72px;
+        position: relative;
+        z-index: 1;
+      }
+      header {
+        display: grid;
+        gap: 12px;
+        margin-bottom: 32px;
+      }
+      h1 {
+        font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+        font-size: clamp(2.2rem, 4vw, 3.4rem);
+        margin: 0;
+        letter-spacing: 0.02em;
+      }
+      .tagline {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 0.7rem;
+        color: var(--accent-strong);
+      }
+      p.lead {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.08rem;
+        max-width: 680px;
+      }
+      .panel {
+        background: var(--panel);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 26px;
+        padding: 28px;
+        box-shadow:
+          0 30px 70px rgba(27, 26, 23, 0.12),
+          0 0 0 1px rgba(31, 122, 111, 0.08);
+        backdrop-filter: blur(12px);
+        animation: floatIn 0.6s ease-out;
+      }
+      form {
+        display: grid;
+        gap: 18px;
+      }
+      .row {
+        display: grid;
+        gap: 16px;
+      }
+      @media (min-width: 720px) {
+        .row.cols-2 { grid-template-columns: 1fr 1fr; }
+      }
+      label {
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+      input[type="text"],
+      input[type="file"] {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(31, 122, 111, 0.2);
+        background: rgba(255, 255, 255, 0.9);
+        font-size: 0.95rem;
+      }
+      input[type="file"] {
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.75);
+      }
+      input:focus {
+        outline: 2px solid var(--ring);
+        border-color: var(--accent);
+        box-shadow: 0 0 0 6px var(--glow);
+      }
+      button {
+        padding: 14px 20px;
+        border: none;
+        border-radius: 999px;
+        background: var(--accent);
+        color: white;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 16px 36px rgba(31, 122, 111, 0.25);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      button:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(31, 122, 111, 0.3); }
+      button:active { transform: translateY(0); }
+      .hint {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .error {
+        padding: 12px 16px;
+        background: rgba(255, 215, 203, 0.8);
+        color: #7b2d1a;
+        border: 1px solid rgba(244, 183, 167, 0.8);
+        border-radius: 12px;
+        font-weight: 600;
+      }
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(31, 122, 111, 0.12);
+        color: var(--accent-strong);
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      @keyframes floatIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <div class="tagline">Studio Mode</div>
+        <h1>Turn a PDF into a detailed podcast</h1>
+        <p class="lead">Upload a PDF, pick speakers and voices, and get an MP3 narration that feels like a real conversation.</p>
+        <div class="chip-row">
+          <div class="chip">PDF → Script</div>
+          <div class="chip">Gemini Dialogue</div>
+          <div class="chip">Edge TTS</div>
+          <div class="chip">MP3 Export</div>
+        </div>
+      </header>
+      <section class="panel">
+        {% if error %}
+          <div class="error">{{ error }}</div>
+        {% endif %}
+        <form method="post" action="/generate" enctype="multipart/form-data">
+          <div class="row">
+            <label for="pdf">PDF file</label>
+            <input id="pdf" name="pdf" type="file" accept=".pdf" required>
+          </div>
+          <div class="row cols-2">
+            <div>
+              <label for="speaker1">Speaker 1</label>
+              <input id="speaker1" name="speaker1" type="text" value="Elliott">
+            </div>
+            <div>
+              <label for="speaker2">Speaker 2</label>
+              <input id="speaker2" name="speaker2" type="text" value="Clementine">
+            </div>
+          </div>
+          <div class="row cols-2">
+            <div>
+              <label for="voice1">Voice 1 (Edge TTS)</label>
+              <input id="voice1" name="voice1" type="text" value="en-US-GuyNeural">
+            </div>
+            <div>
+              <label for="voice2">Voice 2 (Edge TTS)</label>
+              <input id="voice2" name="voice2" type="text" value="en-US-JennyNeural">
+            </div>
+          </div>
+          <div class="row">
+            <label for="lang">Language</label>
+            <input id="lang" name="lang" type="text" value="English">
+          </div>
+          <div class="row">
+            <label for="model">Gemini model</label>
+            <input id="model" name="model" type="text" list="model-options" value="gemini-2.5-flash">
+            <datalist id="model-options">
+              <option value="gemini-2.5-flash"></option>
+              <option value="gemini-2.5-pro"></option>
+              <option value="gemini-2.0-flash"></option>
+              <option value="gemini-2.0-pro"></option>
+              <option value="gemini-1.5-pro"></option>
+              <option value="gemini-1.5-flash"></option>
+            </datalist>
+            <div class="hint">Pick a model from the list or type any Gemini model ID.</div>
+          </div>
+          <div class="row">
+            <button type="submit">Generate Podcast MP3</button>
+            <div class="hint">Large PDFs can take a while. Keep this tab open while we build your audio.</div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </body>
+</html>

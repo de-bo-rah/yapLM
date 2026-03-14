@@ -1,0 +1,5 @@
+edge-tts
+pydub
+flask
+PyPDF2
+google-genai

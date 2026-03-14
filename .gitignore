@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+cookies/
+SSML.txt
+final_output.mp3
+output_segment_*.mp3
+
+.env
+.env.*
+
+.DS_Store
+Thumbs.db
