@@ -1,6 +1,6 @@
 # yapLM
 
-This project helps you create a yap session ( podcast kinda ) with two speakers ( inspired by notebooklm ) based on any pdf you plug in so you can summarise any complex topic into a fun little audio file
+YapLM helps you create a yap session ( podcast if you prefer ) with two speakers ( inspired by notebooklm ) based on any pdf you plug in so you can summarise any complex topic into a fun little audio file
 
 ## Requirements
 - Python 3.8 
