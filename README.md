@@ -1,12 +1,12 @@
 # yapLM
 
-Generate a detailed, two-speaker podcast from a PDF or plain text using Gemini + Edge TTS.
+This project helps you create a yap session ( podcast kinda ) with two speakers ( inspired by notebooklm ) based on any pdf you plug in so you can summarise any complex topic into a fun little audio file
 
 ## Requirements
-- Python 3.8 or higher
-- A Gemini API key to generate the conversational dialogue
+- Python 3.8 
+- your Gemini API key 
 - [EdgeTTS](https://pypi.org/project/edge-tts/) to generate text-to-speech
-- [Pydub](https://pypi.org/project/pydub/) to make the final MP3
+- [Pydub](https://pypi.org/project/pydub/) to make the final audio file 
 
 ## Installation
 
@@ -55,15 +55,12 @@ Set your Gemini API key:
 setx GEMINI_API_KEY "your-gemini-api-key"
 ```
 
-Prepare your input:
-Create a `content.txt` file with the text you want to turn into a podcast.
-
 Run the script:
 ```
 python podcast_script.py
 ```
 
-## Web App (PDF to Podcast)
+## Web App 
 
 1. **Set your Gemini API key:**
 ```
@@ -81,9 +78,6 @@ Visit `http://127.0.0.1:5000` and upload a PDF.
 ### Notes for the web app
 - `pydub` requires `ffmpeg` installed and available on your PATH.
 - Large PDFs can take several minutes to process.
-
-## Output
-The script generates SSML, synthesizes speech, and combines the segments into `final_output.mp3`.
 
 ## Customization
 
