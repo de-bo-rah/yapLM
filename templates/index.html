@@ -20,8 +20,8 @@
         margin: 0;
         color: var(--ink);
         background:
-          linear-gradient(120deg, rgba(10, 9, 8, 0.85), rgba(10, 9, 8, 0.35)),
-          url("/static/radiohead.jpeg") center/cover no-repeat fixed;
+          url("/static/silly-fella.jpeg") top 4% right 6% / 360px auto no-repeat,
+          #0c0b0a;
         font-family: "Trebuchet MS", "Segoe UI", sans-serif;
         min-height: 100vh;
       }
@@ -30,8 +30,7 @@
         position: fixed;
         inset: 0;
         background-image:
-          linear-gradient(120deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)),
-          radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.08), transparent 45%);
+          radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.12), transparent 40%);
         pointer-events: none;
       }
       .page {
@@ -66,7 +65,10 @@
         margin: 0;
         color: var(--muted);
         font-size: 1.08rem;
-        max-width: 680px;
+        max-width: 520px;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
       }
       .panel {
         background: var(--panel);
@@ -181,13 +183,7 @@
       <header>
         <div class="tagline">Studio Mode</div>
         <h1>Turn a PDF into a detailed podcast</h1>
-        <p class="lead">Upload a PDF, pick speakers and voices, and get an MP3 narration that feels like a real conversation.</p>
-        <div class="chip-row">
-          <div class="chip">PDF -> Script</div>
-          <div class="chip">Gemini Dialogue</div>
-          <div class="chip">Edge TTS</div>
-          <div class="chip">MP3 Export</div>
-        </div>
+        <p class="lead">plug any pdf of your choice and have fun :D !!</p>
       </header>
       <section class="panel">
         {% if error %}
