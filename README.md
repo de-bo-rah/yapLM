@@ -2,11 +2,17 @@
 
 YapLM helps you create a yap session ( podcast if you prefer ) with two speakers ( inspired by notebooklm ) based on any pdf you plug in so you can summarise any complex topic into a fun little audio file
 
-## Requirements
-- Python 3.8 
-- your Gemini API key 
-- [EdgeTTS](https://pypi.org/project/edge-tts/) to generate text-to-speech
-- [Pydub](https://pypi.org/project/pydub/) to make the final audio file 
+## Tech Stack
+- Language: Python 3.8+
+
+- LLM: [Google Gemini](https://ai.google.dev/) API (Default: gemini-1.5-flash)
+
+- Speech: [EdgeTTS](https://pypi.org/project/edge-tts/) (Microsoft Edge Neural Voices)
+
+- Audio Processing: [Pydub](https://pypi.org/project/pydub/) (requires FFmpeg)
+
+- Web Framework: [Flask](https://flask.palletsprojects.com/)
+
 
 ## Installation
 
