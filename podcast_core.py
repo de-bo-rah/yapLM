@@ -12,10 +12,12 @@ from pydub import AudioSegment
 def generate_ssml_conversation(client, text, speaker1, speaker2, lang, model):
     print("Generating SSML conversation...")
     dialogue_prompt = (
-        f"Create a detailed, light-hearted podcast conversation between two people based on the following text: '{text}'. "
-        f"The first person is {speaker1}, and the second person is {speaker2}. They should affirm each other "
-        f"and include pauses, but do not include stage directions or actions like (smiling) or (pausing). "
-        f"Let {speaker1} introduce the podcast and {speaker2} at the start. "
+        f"Create a detailed, highly intellectual podcast conversation based on the following text: '{text}'. "
+        f"The first person is {speaker1}, and the second person is {speaker2}. They should philosophize and "
+        f"intellectualize the content as much as possible while keeping the tone fun and energetic with Gen Z lingo. "
+        f"They should affirm each other and include short pauses, but do not include stage directions or actions "
+        f"like (smiling) or (pausing). Let {speaker1} introduce the podcast and {speaker2} at the start. "
+        f"Keep it insightful yet playful, mixing deep analysis with modern slang, and avoid being cringe. "
         f"Text in {lang} and at least 10 turns of every speaker.\n\n"
         f"IMPORTANT FORMAT: Return ONLY dialogue lines, each line must start with '{speaker1}:' or '{speaker2}:' exactly."
     )
