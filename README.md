@@ -102,5 +102,11 @@ voice_map = {
 }
 ```
 
+Fine-tune voice realism by adjusting rate and pitch in the web UI:
+```
+rate = "+0%"
+pitch = "+0Hz"
+```
+
 ### Gemini notes
 You can change the model in the web UI (default: `gemini-2.5-flash`).

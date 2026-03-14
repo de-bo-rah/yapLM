@@ -9,6 +9,13 @@ from google import genai
 from pydub import AudioSegment
 
 
+def _add_sentence_breaks(text):
+    sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", text) if s.strip()]
+    if len(sentences) <= 1:
+        return text.strip()
+    return " <break time=\"0.2s\"/> ".join(sentences)
+
+
 def generate_ssml_conversation(client, text, speaker1, speaker2, lang, model):
     print("Generating SSML conversation...")
     dialogue_prompt = (
@@ -48,6 +55,7 @@ def generate_ssml_conversation(client, text, speaker1, speaker2, lang, model):
             content = dialogue_text[start:end].strip()
             if not content:
                 continue
+            content = _add_sentence_breaks(content)
             ssml_output += f'<voice name="{speaker}">\n'
             ssml_output += f"    {content}\n"
             ssml_output += "    <break time=\"0.5s\"/>\n" if speaker == speaker1 else "    <break time=\"0.3s\"/>\n"
@@ -59,6 +67,7 @@ def generate_ssml_conversation(client, text, speaker1, speaker2, lang, model):
             sentences = [dialogue_text] if dialogue_text else []
         for i, sentence in enumerate(sentences):
             speaker = speaker1 if i % 2 == 0 else speaker2
+            sentence = _add_sentence_breaks(sentence)
             ssml_output += f'<voice name="{speaker}">\n'
             ssml_output += f"    {sentence}\n"
             ssml_output += "    <break time=\"0.5s\"/>\n" if speaker == speaker1 else "    <break time=\"0.3s\"/>\n"
@@ -85,20 +94,20 @@ def parse_ssml(file_path):
     return segments
 
 
-async def synthesize_text(text, voice_name, voice_map, filename, rate):
+async def synthesize_text(text, voice_name, voice_map, filename, rate, pitch):
     edge_voice = voice_map.get(voice_name)
     if edge_voice is None:
         raise ValueError(f"Unknown voice name: {voice_name}")
     print(f"Generating audio for voice: {edge_voice}")
-    communicate = edge_tts.Communicate(text, voice=edge_voice, rate=rate)
+    communicate = edge_tts.Communicate(text, voice=edge_voice, rate=rate, pitch=pitch)
     await communicate.save(filename)
     print(f"Audio saved to '{filename}'.")
 
 
-async def synthesize_segments(segments, voice_map, out_dir, rate):
+async def synthesize_segments(segments, voice_map, out_dir, rate, pitch):
     for i, (voice_name, text) in enumerate(segments):
         mp3_filename = os.path.join(out_dir, f"output_segment_{i + 1}.mp3")
-        await synthesize_text(text, voice_name, voice_map, mp3_filename, rate)
+        await synthesize_text(text, voice_name, voice_map, mp3_filename, rate, pitch)
 
 
 def combine_segments(segment_count, out_dir, output_path):
@@ -120,7 +129,8 @@ async def build_podcast_from_text(
     speaker2,
     lang,
     voice_map,
-    rate="+15%",
+    rate="+0%",
+    pitch="+0Hz",
     ssml_output_path=None,
     model="gemini-2.5-flash",
 ):
@@ -144,5 +154,5 @@ async def build_podcast_from_text(
 
         segments = parse_ssml(ssml_path)
         print(f"Found {len(segments)} segments to synthesize.")
-        await synthesize_segments(segments, voice_map, tmpdir, rate)
+        await synthesize_segments(segments, voice_map, tmpdir, rate, pitch)
         combine_segments(len(segments), tmpdir, output_path)

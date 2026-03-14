@@ -51,6 +51,8 @@ def generate():
     lang = (request.form.get("lang") or "English").strip()
     voice1 = (request.form.get("voice1") or "en-US-GuyNeural").strip()
     voice2 = (request.form.get("voice2") or "en-US-JennyNeural").strip()
+    rate = (request.form.get("rate") or "+0%").strip()
+    pitch = (request.form.get("pitch") or "+0Hz").strip()
     voice_map = {speaker1: voice1, speaker2: voice2}
     model = (request.form.get("model") or "gemini-2.5-flash").strip()
 
@@ -83,6 +85,8 @@ def generate():
                 lang=lang,
                 voice_map=voice_map,
                 model=model,
+                rate=rate,
+                pitch=pitch,
             )
         )
     except Exception as exc:
