@@ -54,17 +54,6 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Usage (CLI)
-
-Set your Gemini API key:
-```
-setx GEMINI_API_KEY "your-gemini-api-key"
-```
-
-Run the script:
-```
-python podcast_script.py
-```
 
 ## Web App 
 
