@@ -71,7 +71,6 @@ python podcast_script.py
 1. **Set your Gemini API key:**
 ```
 $env:GEMINI_API_KEY = "your_api_key"
-
 ```
 
 2. **Run the web app:**
