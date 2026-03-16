@@ -55,6 +55,13 @@ def generate():
     pitch = (request.form.get("pitch") or "+0Hz").strip()
     voice_map = {speaker1: voice1, speaker2: voice2}
     model = (request.form.get("model") or "gemini-2.5-flash").strip()
+    length = (request.form.get("length") or "medium").strip()
+    question = (request.form.get("question") or "").strip()
+    use_rag = (request.form.get("use_rag") or "").lower() == "on"
+    rag_query = (request.form.get("rag_query") or "").strip()
+    rag_top_k = int(request.form.get("rag_top_k") or 6)
+    if use_rag and not rag_query:
+        rag_query = question
 
     tmpdir = tempfile.mkdtemp()
 
@@ -87,6 +94,11 @@ def generate():
                 model=model,
                 rate=rate,
                 pitch=pitch,
+                length=length,
+                question=question,
+                rag_enabled=use_rag,
+                rag_query=rag_query,
+                rag_top_k=rag_top_k,
             )
         )
     except Exception as exc:
