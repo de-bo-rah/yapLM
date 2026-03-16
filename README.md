@@ -1,18 +1,14 @@
-# yapLM
+﻿# yapLM
 
-YapLM helps you create a yap session ( podcast if you prefer ) with two speakers ( inspired by notebooklm ) based on any pdf you plug in so you can summarise any complex topic into a fun little audio file
+![funny](assets/funny.JPG)
 
-## Tech Stack
-- Language: Python 3.8+
+Generate a detailed, two-speaker podcast from a PDF or plain text using Gemini + Edge TTS.
 
-- LLM: [Google Gemini](https://ai.google.dev/) API (Default: gemini-1.5-flash)
-
-- Speech: [EdgeTTS](https://pypi.org/project/edge-tts/) (Microsoft Edge Neural Voices)
-
-- Audio Processing: [Pydub](https://pypi.org/project/pydub/) (requires FFmpeg)
-
-- Web Framework: [Flask](https://flask.palletsprojects.com/)
-
+## Requirements
+- Python 3.8 or higher
+- A Gemini API key to generate the conversational dialogue
+- [EdgeTTS](https://pypi.org/project/edge-tts/) to generate text-to-speech
+- [Pydub](https://pypi.org/project/pydub/) to make the final MP3
 
 ## Installation
 
@@ -54,12 +50,30 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+## Usage (CLI)
 
-## Web App 
+Set your Gemini API key:
+```
+setx GEMINI_API_KEY "your-gemini-api-key"
+```
+
+Prepare your input:
+Create a `content.txt` file with the text you want to turn into a podcast.
+
+Run the script:
+```
+python podcast_script.py
+```
+
+## Web App (PDF to Podcast)
 
 1. **Set your Gemini API key:**
 ```
-$env:GEMINI_API_KEY = "your_api_key"
+setx GEMINI_API_KEY "your-gemini-api-key"
+```
+For a single PowerShell session, you can also use:
+```
+$env:GEMINI_API_KEY = "your-gemini-api-key"
 ```
 
 2. **Run the web app:**
@@ -73,6 +87,11 @@ Visit `http://127.0.0.1:5000` and upload a PDF.
 ### Notes for the web app
 - `pydub` requires `ffmpeg` installed and available on your PATH.
 - Large PDFs can take several minutes to process.
+- Use **Podcast length** to control how detailed the script is.
+- Use **Ask a question** to add a focused Q&A segment grounded in the PDF.
+
+## Output
+The script generates SSML, synthesizes speech, and combines the segments into `final_output.mp3`.
 
 ## Customization
 

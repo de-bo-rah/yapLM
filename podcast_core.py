@@ -1,4 +1,4 @@
-import asyncio
+﻿import asyncio
 import os
 import re
 import tempfile
@@ -38,6 +38,7 @@ def _length_profile(length_choice):
         },
     }
     return profiles.get(choice, profiles["medium"])
+
 
 def _split_sentences(text):
     return [s.strip() for s in re.split(r"(?<=[.!?])\s+", text) if s.strip()]
