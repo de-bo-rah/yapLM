@@ -1,10 +1,42 @@
 ﻿# yapLM
 
-yapLM helps you prepare a yap session ( podcast if you prefer ) based on any pdf you plug in so that you can breaj down complex topics into a fun little audio file
+yapLM ( inspired by NotebookLM ) helps you prepare a yap session ( podcast if you prefer ) based on any pdf you plug in so that you can break down complex topics into a fun little audio file.
 
-## Requirements
-- Python 3.8 or higher
-- A Gemini API key to generate the conversational dialogue
+## How it gets done ?
+
+### Document Preprocessing
+- the app uses [PyPDF2](https://pypdf2.readthedocs.io/en/3.x/) for text extraction from the uploaded pdf
+- the pdf reader loads the pdf and loops through each page
+- all the page texts are appended together + basic normalization
+
+### Forming the context window
+- the text is split first to paragraphs ( target size ~ 1200 chars )
+- if it exceeds the target size, the paragraph is split into sentences
+- an overlap of 200 chars is maintained from previous chunk to the next
+
+### Lexical Retrieval 
+- the chunks are vectorized using [TF-IDF](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html)
+- the user's query is embedded in the same vector space
+- cosine similarity is used to rank chunks and use the top k 
+
+### RAG grounding ( if enabled )
+- the retrieved chunks are appended to the prompt
+- the prompt explicitly states the model to use the top k chunks
+- here's a nice [article](https://towardsdatascience.com/5-techniques-to-prevent-hallucinations-in-your-rag-question-answering/)
+
+### SSML generation + TTS
+- the dialogue generated is converted to SSML and Edge TTS is used to convert the text to speech
+- prosody controls : rate/ pitch
+- all the segments are concatenated into a final mp3 audio file
+
+
+
+
+
+
+## Tech Stack
+- Python 3.8+
+- Gemini API key 
 - [EdgeTTS](https://pypi.org/project/edge-tts/) to generate text-to-speech
 - [Pydub](https://pypi.org/project/pydub/) to make the final MP3
 
@@ -78,7 +110,7 @@ Visit `http://127.0.0.1:5000` and upload a PDF.
 ## Output
 The script generates SSML, synthesizes speech, and combines the segments into `final_output.mp3`.
 
-## Customization
+## Features
 
 Change speakers and language by editing the fields in the web UI, or update defaults in `app.py`:
 ```
@@ -101,5 +133,3 @@ rate = "+0%"
 pitch = "+0Hz"
 ```
 
-### Gemini notes
-You can change the model in the web UI (default: `gemini-2.5-flash`).
