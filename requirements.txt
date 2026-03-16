@@ -3,3 +3,4 @@ pydub
 flask
 PyPDF2
 google-genai
+scikit-learn
