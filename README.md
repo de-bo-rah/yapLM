@@ -1,8 +1,6 @@
 ﻿# yapLM
 
-
-
-Generate a detailed, two-speaker podcast from a PDF or plain text using Gemini + Edge TTS.
+yapLM helps you prepare a yap session ( podcast if you prefer ) based on any pdf you plug in so that you can breaj down complex topics into a fun little audio file
 
 ## Requirements
 - Python 3.8 or higher
