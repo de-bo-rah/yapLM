@@ -97,7 +97,9 @@
         font-size: 0.95rem;
       }
       input[type="text"],
-      input[type="file"] {
+      input[type="file"],
+      select,
+      textarea {
         width: 100%;
         padding: 12px 14px;
         border-radius: 14px;
@@ -106,9 +108,18 @@
         color: var(--ink);
         font-size: 0.95rem;
       }
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--accent);
+      }
       input[type="file"] {
         padding: 10px;
         background: rgba(18, 16, 14, 0.7);
+      }
+      textarea {
+        min-height: 110px;
+        resize: vertical;
       }
       input:focus {
         outline: 2px solid var(--ring);
@@ -273,9 +284,53 @@
             <div class="hint">Pick a model from the list or type any Gemini model ID.</div>
           </div>
           <div class="row">
+            <div class="section-title">Grounding (RAG)</div>
+          </div>
+          <div class="row cols-2">
+            <div>
+              <label for="use_rag">Enable RAG grounding</label>
+              <input id="use_rag" name="use_rag" type="checkbox">
+            </div>
+            <div>
+              <label for="rag_top_k">RAG chunks</label>
+              <select id="rag_top_k" name="rag_top_k">
+                <option value="3">3 chunks</option>
+                <option value="5">5 chunks</option>
+                <option value="6" selected>6 chunks</option>
+                <option value="8">8 chunks</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <label for="rag_query">RAG focus (optional)</label>
+            <input id="rag_query" name="rag_query" type="text" placeholder="e.g., key results, conclusions, methodology">
+            <div class="hint">If empty, we use your question (if provided) or main points.</div>
+          </div>
+          <div class="row cols-2">
+            <div>
+              <label for="length">Podcast length</label>
+              <select id="length" name="length">
+                <option value="short">Quick (2-3 min)</option>
+                <option value="medium" selected>Medium (5-7 min)</option>
+                <option value="long">Deep dive (10-12 min)</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <label for="question">Ask a question (optional)</label>
+            <textarea id="question" name="question" placeholder="What should the hosts answer directly from the PDF?"></textarea>
+            <div class="hint">We will add a focused Q&A segment based on the source text.</div>
+          </div>
+          <div class="row">
             <button type="submit">Generate Podcast MP3</button>
             <div class="hint">Large PDFs can take a while. Keep this tab open while we build your audio.</div>
           </div>
+        </form>
+      </section>
+    </div>
+  </body>
+</html>
+
         </form>
       </section>
     </div>
