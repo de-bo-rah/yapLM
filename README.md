@@ -1,6 +1,6 @@
 ﻿# yapLM
 
-![funny](assets/funny.JPG)
+
 
 Generate a detailed, two-speaker podcast from a PDF or plain text using Gemini + Edge TTS.
 
@@ -50,20 +50,6 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Usage (CLI)
-
-Set your Gemini API key:
-```
-setx GEMINI_API_KEY "your-gemini-api-key"
-```
-
-Prepare your input:
-Create a `content.txt` file with the text you want to turn into a podcast.
-
-Run the script:
-```
-python podcast_script.py
-```
 
 ## Web App (PDF to Podcast)
 
@@ -85,6 +71,7 @@ python app.py
 Visit `http://127.0.0.1:5000` and upload a PDF.
 
 ### Notes for the web app
+
 - `pydub` requires `ffmpeg` installed and available on your PATH.
 - Large PDFs can take several minutes to process.
 - Use **Podcast length** to control how detailed the script is.
